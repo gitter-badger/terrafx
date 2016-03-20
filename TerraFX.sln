@@ -17,6 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{835D17EA-0C85-4BC2-A716-358B12D1042A}"
 	ProjectSection(SolutionItems) = preProject
 		.targets\Common\TerraFX.Common.props = .targets\Common\TerraFX.Common.props
+		.targets\Common\TerraFX.Common.targets = .targets\Common\TerraFX.Common.targets
 	EndProjectSection
 EndProject
 Global

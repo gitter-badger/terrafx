@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyInfoFile>$(IntermediateOutputPath)TemporaryGeneratedFile_AssemblyInfo.cs</AssemblyInfoFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyCompany">
+      <_Parameter1>Tanner Gooding</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyConfiguration">
+      <_Parameter1>$(Configuration)</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyCopyright">
+      <_Parameter1>Copyright (c) 2016, Tanner Gooding</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyDefaultAlias">
+      <_Parameter1>$(AssemblyName)</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyDescription">
+      <_Parameter1>A modern framework for developing multimedia-based applications.</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyFileVersion">
+      <_Parameter1>$(AssemblyVersion).$(BuildVersion)</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyInformationalVersion">
+      <_Parameter1>$(AssemblyVersion).$(BuildVersion)-$(InformationalVersion)</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyProduct">
+      <_Parameter1>TerraFX</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyTrademark">
+      <_Parameter1>It's not just good, it's Gooding.</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Reflection.AssemblyVersion">
+      <_Parameter1>$(AssemblyVersion).0.0</_Parameter1>
+    </AssemblyInfoAttribute>
+    <AssemblyInfoAttribute Include="System.Resources.NeutralResourcesLanguage">
+      <_Parameter1>en-US</_Parameter1>
+    </AssemblyInfoAttribute>
+  </ItemGroup>
+  <Target Name="GenerateAssemblyInfoFile" BeforeTargets="CoreCompile" Outputs="$(AssemblyInfoFile)">
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <WriteCodeFragment AssemblyAttributes="@(AssemblyInfoAttribute)" Language="C#" OutputFile="$(AssemblyInfoFile)">
+      <Output TaskParameter="OutputFile" ItemName="Compile" />
+    </WriteCodeFragment>
+  </Target>
+</Project>

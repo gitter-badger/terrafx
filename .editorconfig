@@ -29,7 +29,7 @@ trim_trailing_whitespace = true
 #   2 space indentation, and
 #   no newline ending the file
 ###############################################################################
-[*.props]
+[*.{props,targets}]
 end_of_line = crlf
 indent_size = 2
 insert_final_newline = false
