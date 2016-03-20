@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ArtifactsPath Condition="'$(ArtifactsPath)' == ''">$(MSBuildThisFileDirectory)..\..\.artifacts\</ArtifactsPath>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">0.1</AssemblyVersion>
+    <BuildVersion Condition="'$(BuildVersion)' == ''">0.0</BuildVersion>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <InformationalVersion Condition="'$(InformationalVersion)' == ''">alpha</InformationalVersion>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)..\..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <BaseDocumentationPath>$(ArtifactsPath)$(Configuration)\Documentation\</BaseDocumentationPath>
+    <BaseIntermediateOutputPath>$(ArtifactsPath)$(Configuration)\Objects\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(ArtifactsPath)$(Configuration)\Binaries\</BaseOutputPath>
+    <Deterministic>true</Deterministic>
+    <DocumentationFile>$(BaseDocumentationPath)$(AssemblyName).xml</DocumentationFile>
+    <ErrorReport>prompt</ErrorReport>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(AssemblyName)\</IntermediateOutputPath>
+    <FileAlignment>512</FileAlignment>
+    <OutputPath>$(BaseOutputPath)$(AssemblyName)\</OutputPath>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+</Project>

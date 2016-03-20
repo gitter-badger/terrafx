@@ -10,6 +10,7 @@
 #   treat as text, and
 #   convert to Windows-style line endings on checkout
 ###############################################################################
+*.props     text        eol=crlf
 *.sln       text        eol=crlf
 
 ###############################################################################

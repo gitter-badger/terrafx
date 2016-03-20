@@ -25,6 +25,17 @@ trim_trailing_whitespace = true
 
 ###############################################################################
 # Set file behavior to:
+#   Windows-style line endings,
+#   2 space indentation, and
+#   no newline ending the file
+###############################################################################
+[*.props]
+end_of_line = crlf
+indent_size = 2
+insert_final_newline = false
+
+###############################################################################
+# Set file behavior to:
 #   Windows-style line endings, and
 #   tabular indentation
 ###############################################################################
