@@ -31,3 +31,10 @@ trim_trailing_whitespace = true
 [*.sln]
 end_of_line = crlf
 indent_style = tab
+
+###############################################################################
+# Set file behavior to:
+#   2 space indentation
+###############################################################################
+[*.ps1]
+indent_size = 2
