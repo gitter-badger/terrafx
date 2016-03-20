@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{003D7BAF-F7CB-4BC8-A009-B92BAA9F693B}"
 	ProjectSection(SolutionItems) = preProject
 		.targets\Portable\TerraFX.Portable.props = .targets\Portable\TerraFX.Portable.props
+		.targets\Portable\TerraFX.Portable.targets = .targets\Portable\TerraFX.Portable.targets
 	EndProjectSection
 EndProject
 Global
