@@ -20,11 +20,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{835D17
 		.targets\Common\TerraFX.Common.targets = .targets\Common\TerraFX.Common.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{003D7BAF-F7CB-4BC8-A009-B92BAA9F693B}"
+	ProjectSection(SolutionItems) = preProject
+		.targets\Portable\TerraFX.Portable.props = .targets\Portable\TerraFX.Portable.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{835D17EA-0C85-4BC2-A716-358B12D1042A} = {CF65E456-3E26-41EF-B1C4-7868A5C27CE3}
+		{003D7BAF-F7CB-4BC8-A009-B92BAA9F693B} = {CF65E456-3E26-41EF-B1C4-7868A5C27CE3}
 	EndGlobalSection
 EndGlobal
