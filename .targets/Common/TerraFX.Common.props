@@ -12,6 +12,7 @@
   <PropertyGroup>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)TerraFX.snk</AssemblyOriginatorKeyFile>
     <BaseDocumentationPath>$(ArtifactsPath)$(Configuration)\Documentation\</BaseDocumentationPath>
     <BaseIntermediateOutputPath>$(ArtifactsPath)$(Configuration)\Objects\</BaseIntermediateOutputPath>
     <BaseOutputPath>$(ArtifactsPath)$(Configuration)\Binaries\</BaseOutputPath>
@@ -21,8 +22,10 @@
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(AssemblyName)\</IntermediateOutputPath>
     <FileAlignment>512</FileAlignment>
     <OutputPath>$(BaseOutputPath)$(AssemblyName)\</OutputPath>
+    <PublicSign>true</PublicSign>
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <SignAssembly>true</SignAssembly>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

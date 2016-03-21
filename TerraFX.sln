@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		Build.ps1 = Build.ps1
 		License.md = License.md
 		Readme.md = Readme.md
+		TerraFX.snk = TerraFX.snk
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".targets", ".targets", "{CF65E456-3E26-41EF-B1C4-7868A5C27CE3}"
