@@ -4,7 +4,9 @@ Param(
   [string] $configuration = "Debug",
   [string] $informationalVersion = "alpha",
   [string] $msbuildVersion = "14.0",
+  [string] $nugetVersion = "3.4.0-rc",
   [switch] $skipBuild,
+  [switch] $skipRestore,
   [string] $target = "Build"
 )
 
@@ -12,6 +14,20 @@ function Create-Directory([string[]] $path) {
   if (!(Test-Path -path $path)) {
     New-Item -path $path -force -itemType "Directory" | Out-Null
   }
+}
+
+function Download-File([string] $address, [string] $fileName) {
+  $webClient = New-Object -typeName "System.Net.WebClient"
+  $webClient.DownloadFile($address, $fileName)
+}
+
+function Get-ProductVersion([string[]] $path) {
+  if (!(Test-Path -path $path)) {
+    return ""
+  }
+
+  $item = Get-Item -path $path
+  return $item.VersionInfo.ProductVersion
 }
 
 function Get-RegistryValue([string] $keyName, [string] $valueName) {
@@ -66,6 +82,44 @@ function Locate-MSBuildVersionPath {
   return Resolve-Path -path $msbuildVersionPath
 }
 
+function Locate-NuGet {
+  $scriptPath = Locate-ScriptPath
+  $nuget = Join-Path -path $scriptPath -childPath "nuget.exe"
+
+  if (Test-Path -path $nuget) {
+    $currentVersion = Get-ProductVersion -path $nuget
+
+    if ($currentVersion.StartsWith($nugetVersion)) {
+      return Resolve-Path -path $nuget
+    }
+
+    Write-Host -object "The located version of NuGet ($currentVersion) is out of date. The specified version ($nugetVersion) will be downloaded instead."
+    Remove-Item -path $nuget | Out-Null
+  }
+
+  Download-File -address "https://dist.nuget.org/win-x86-commandline/v$nugetVersion/nuget.exe" -fileName $nuget
+
+  if (!(Test-Path -path $nuget)) {
+    throw "The specified NuGet version ($nugetVersion) could not be downloaded."
+  }
+
+  return Resolve-Path -path $nuget
+}
+
+function Locate-NuGetConfig {
+  $scriptPath = Locate-ScriptPath
+  $nugetConfig = Join-Path -path $scriptPath -childPath "nuget.config"
+  return Resolve-Path -path $nugetConfig
+}
+
+function Locate-PackagesPath {
+  $scriptPath = Locate-ScriptPath
+  $packagesPath = Join-Path -path $scriptPath -childPath ".packages\"
+
+  Create-Directory -path $packagesPath
+  return Resolve-Path -path $packagesPath
+}
+
 function Locate-ScriptPath {
   $myInvocation = Get-Variable -name "MyInvocation" -scope "Script"
   $scriptPath = Split-Path -path $myInvocation.Value.MyCommand.Definition -parent
@@ -103,4 +157,26 @@ function Perform-Build {
   Write-Host -object "The build completed successfully." -foregroundColor Green
 }
 
+function Perform-Restore {
+  if ($skipRestore) {
+    Write-Host -object "Skipping restore..."
+    return
+  }
+
+  $nuget = Locate-NuGet
+  $nugetConfig = Locate-NuGetConfig
+  $packagesPath = Locate-PackagesPath
+  $solution = Locate-Solution
+
+  Write-Host -object "Starting restore..."
+  & $nuget restore -packagesDirectory $packagesPath -msbuildVersion $msbuildVersion -verbosity normal -nonInteractive -configFile $nugetConfig $solution
+
+  if ($lastExitCode -ne 0) {
+    throw "The restore failed with an exit code of '$lastExitCode'."
+  }
+
+  Write-Host -object "The restore completed successfully." -foregroundColor Green
+}
+
+Perform-Restore
 Perform-Build

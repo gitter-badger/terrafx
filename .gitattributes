@@ -18,6 +18,7 @@
 # Set file behavior to:
 #   treat as text
 ###############################################################################
+*.config    text
 *.md        text
 *.ps1       text
 

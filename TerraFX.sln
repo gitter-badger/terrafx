@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		.gitignore = .gitignore
 		Build.ps1 = Build.ps1
 		License.md = License.md
+		nuget.config = nuget.config
 		Readme.md = Readme.md
 		TerraFX.snk = TerraFX.snk
 	EndProjectSection

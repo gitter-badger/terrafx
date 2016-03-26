@@ -47,5 +47,5 @@ indent_style = tab
 # Set file behavior to:
 #   2 space indentation
 ###############################################################################
-[*.ps1]
+[*.{config,ps1}]
 indent_size = 2
