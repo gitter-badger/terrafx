@@ -1,0 +1,12 @@
+###############################################################################
+# Set default behavior to:
+#   automatically normalize to Unix-style line endings on checkin, and
+#   preserve Unix-style line endings on checkout
+###############################################################################
+*           text=auto   eol=lf
+
+###############################################################################
+# Set file behavior to:
+#   treat as text
+###############################################################################
+*.md        text
