@@ -2,11 +2,13 @@ Param(
   [string] $assemblyVersion = "0.1",
   [string] $buildVersion = "0.0",
   [string] $configuration = "Debug",
+  [string] $gitLinkVersion =  "2.2.0",
   [string] $informationalVersion = "alpha",
   [string] $msbuildVersion = "14.0",
   [string] $nugetVersion = "3.4.0-rc",
   [switch] $skipBuild,
   [switch] $skipRestore,
+  [switch] $skipSourceLink,
   [string] $target = "Build"
 )
 
@@ -35,12 +37,58 @@ function Get-RegistryValue([string] $keyName, [string] $valueName) {
   return $registryKey.$valueName
 }
 
+function Install-Package([string] $packageName, [string] $packageVersion) {
+  $packagesPath = Locate-PackagesPath
+  $nuget = Locate-NuGet
+  $nugetConfig = Locate-NuGetConfig
+
+  Write-Host -object "Installing $packageName.$packageVersion"
+  & $nuget install -outputDirectory $packagesPath -version $packageVersion -preRelease -verbosity normal -nonInteractive -configFile $nugetConfig $packageName | Out-Null
+
+  if ($lastExitCode -ne 0) {
+    throw "The restore failed with an exit code of '$lastExitCode'."
+  }
+}
+
 function Locate-ArtifactsPath {
   $scriptPath = Locate-ScriptPath
   $artifactsPath = Join-Path -path $scriptPath -ChildPath ".artifacts\"
 
   Create-Directory -path $artifactsPath
   return Resolve-Path -path $artifactsPath
+}
+
+function Locate-GitLink {
+  $gitLinkPath = Locate-GitLinkPath
+  $gitLink = Join-Path -path $gitLinkPath -childPath "GitLink.exe"
+
+  if (Test-Path -path $gitLink) {
+    return Resolve-Path -path $gitLink
+  }
+
+  Install-Package -packageName "GitLink" -packageVersion $gitLinkVersion
+
+  if (!(Test-Path -path $gitLink)) {
+    throw "The specified GitLink version ($gitVersion) could not be installed."
+  }
+
+  return Resolve-Path -path $gitLink
+}
+
+function Locate-GitLinkLogPath {
+  $artifactsPath = Locate-ArtifactsPath
+  $gitLinkLogPath = Join-Path -path $artifactsPath -ChildPath "$configuration\SourceLink\"
+
+  Create-Directory -path $gitLinkLogPath
+  return Resolve-Path -path $gitLinkLogPath
+}
+
+function Locate-GitLinkPath {
+  $packagesPath = Locate-PackagesPath
+  $gitLinkPath = Join-Path -path $packagesPath -childPath "GitLink.$gitLinkVersion\lib\net45\"
+
+  Create-Directory -path $gitLinkPath
+  return Resolve-Path -path $gitLinkPath
 }
 
 function Locate-MSBuild {
@@ -178,5 +226,29 @@ function Perform-Restore {
   Write-Host -object "The restore completed successfully." -foregroundColor Green
 }
 
+function Perform-SourceLink {
+  if ($skipSourceLink) {
+    Write-Host -object "Skipping source link..."
+    return
+  }
+
+  $gitLink = Locate-GitLink
+  $gitLinkLogPath = Locate-GitLinkLogPath
+  $scriptPath = Locate-ScriptPath
+  $solution = Locate-Solution
+
+  $gitLinkSummaryLog = Join-Path -path $gitLinkLogPath -childPath "GitLink.log"
+
+  Write-Host -object "Starting source link..."
+  & $gitLink $scriptPath -f $solution -c $configuration -p $platform -l $gitLinkSummaryLog
+
+  if ($lastExitCode -ne 0) {
+    throw "The source link failed with an exit code of '$lastExitCode'."
+  }
+
+  Write-Host -object "The source link completed successfully." -foregroundColor Green
+}
+
 Perform-Restore
 Perform-Build
+Perform-SourceLink
