@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		License.md = License.md
 		nuget.config = nuget.config
 		Readme.md = Readme.md
+		TerraFX.nunit = TerraFX.nunit
 		TerraFX.snk = TerraFX.snk
 	EndProjectSection
 EndProject

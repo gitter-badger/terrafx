@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NUnitProject>
+  <Settings activeConfig="Debug" />
+  <Config name="Debug" appbase=".artifacts\Debug\Binaries\">
+  </Config>
+  <Config name="Release" appbase=".artifacts\Release\Binaries\">
+  </Config>
+</NUnitProject>

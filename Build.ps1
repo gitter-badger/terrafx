@@ -6,9 +6,11 @@ Param(
   [string] $informationalVersion = "alpha",
   [string] $msbuildVersion = "14.0",
   [string] $nugetVersion = "3.4.0-rc",
+  [string] $nunitVersion = "3.2.0",
   [switch] $skipBuild,
   [switch] $skipRestore,
   [switch] $skipSourceLink,
+  [switch] $skipTest,
   [string] $target = "Build"
 )
 
@@ -160,6 +162,45 @@ function Locate-NuGetConfig {
   return Resolve-Path -path $nugetConfig
 }
 
+function Locate-NUnit {
+  $nunitPath = Locate-NUnitPath
+  $nunit = Join-Path -path $nunitPath -childPath "nunit3-console.exe"
+
+  if (Test-Path -path $nunit) {
+    return Resolve-Path -path $nunit
+  }
+
+  Install-Package -packageName "NUnit.Runners" -packageVersion $nunitVersion
+
+  if (!(Test-Path -path $nunit)) {
+    throw "The specified NUnit version ($nunitVersion) could not be installed."
+  }
+
+  return Resolve-Path -path $nunit
+}
+
+function Locate-NUnitPath {
+  $packagesPath = Locate-PackagesPath
+  $nunitPath = Join-Path -path $packagesPath -childPath "NUnit.ConsoleRunner.$nunitVersion\tools\"
+
+  Create-Directory -path $nunitPath
+  return Resolve-Path -path $nunitPath
+}
+
+function Locate-NUnitLogPath {
+  $artifactsPath = Locate-ArtifactsPath
+  $nunitLogPath = Join-Path -path $artifactsPath -ChildPath "$configuration\Test\"
+
+  Create-Directory -path $nunitLogPath
+  return Resolve-Path -path $nunitLogPath
+}
+
+function Locate-NUnitProject {
+  $scriptPath = Locate-ScriptPath
+  $nunitProject = Join-Path -path $scriptPath -childPath "TerraFX.nunit"
+  return Resolve-Path -path $nunitProject
+}
+
 function Locate-PackagesPath {
   $scriptPath = Locate-ScriptPath
   $packagesPath = Join-Path -path $scriptPath -childPath ".packages\"
@@ -240,7 +281,7 @@ function Perform-SourceLink {
   $gitLinkSummaryLog = Join-Path -path $gitLinkLogPath -childPath "GitLink.log"
 
   Write-Host -object "Starting source link..."
-  & $gitLink $scriptPath -f $solution -c $configuration -p $platform -l $gitLinkSummaryLog
+  & $gitLink $scriptPath -f $solution -c $configuration -l $gitLinkSummaryLog
 
   if ($lastExitCode -ne 0) {
     throw "The source link failed with an exit code of '$lastExitCode'."
@@ -249,6 +290,31 @@ function Perform-SourceLink {
   Write-Host -object "The source link completed successfully." -foregroundColor Green
 }
 
+function Perform-Test {
+  if ($skipTest) {
+    Write-Host -object "Skipping test..."
+    return
+  }
+
+  $nunit = Locate-NUnit
+  $nunitLogPath = Locate-NUnitLogPath
+  $nunitProject = Locate-NUnitProject
+
+  $nunitSummaryLog = Join-Path -path $nunitLogPath -childPath "NUnit.log"
+  $nunitFailureLog = Join-Path -path $nunitLogPath -childPath "NUnit.err"
+  $nunitResultLog = Join-Path -path $nunitLogPath -childPath "NUnit.xml"
+
+  Write-Host -object "Starting test..."
+  & $nunit $nunitProject --work=$nunitLogPath --output=$nunitSummaryLog --err=$nunitFailureLog --full --result=$nunitResultLog --labels=All --verbose --config=$configuration
+
+  if ($lastExitCode -ne 0) {
+    throw "The test failed with an exit code of '$lastExitCode'."
+  }
+
+  Write-Host -object "The test completed successfully." -foregroundColor Green
+}
+
 Perform-Restore
 Perform-Build
 Perform-SourceLink
+Perform-Test
