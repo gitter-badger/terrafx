@@ -1,0 +1,11 @@
+﻿{
+  "dependencies": {
+    "Microsoft.NETCore": "5.0.0",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.0"
+  },
+  "frameworks": {
+    "netstandard1.3": {
+      "imports": [ "dotnet5.4", "portable-net452" ]
+    }
+  }
+}

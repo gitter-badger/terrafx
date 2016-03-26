@@ -29,12 +29,42 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{00
 		.targets\Portable\TerraFX.Portable.targets = .targets\Portable\TerraFX.Portable.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{D0288843-5717-4DC0-AF2B-084E6CA23C9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1C012599-E5EE-49F9-BCCB-3C6D50099240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraFX.Core", "sources\Core\TerraFX.Core\TerraFX.Core.csproj", "{4B1E7931-9DBA-4512-8E54-11EB4A2E747F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D83FAAEA-7822-4171-9B00-732E32ECBB79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BC5FDD54-2B35-43B3-A186-15FBB90D80B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraFX.Core.UnitTests", "tests\Core\TerraFX.Core.UnitTests\TerraFX.Core.UnitTests.csproj", "{C16B5767-E617-4105-808E-973368B562A4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B1E7931-9DBA-4512-8E54-11EB4A2E747F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B1E7931-9DBA-4512-8E54-11EB4A2E747F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B1E7931-9DBA-4512-8E54-11EB4A2E747F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B1E7931-9DBA-4512-8E54-11EB4A2E747F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16B5767-E617-4105-808E-973368B562A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16B5767-E617-4105-808E-973368B562A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16B5767-E617-4105-808E-973368B562A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16B5767-E617-4105-808E-973368B562A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{835D17EA-0C85-4BC2-A716-358B12D1042A} = {CF65E456-3E26-41EF-B1C4-7868A5C27CE3}
 		{003D7BAF-F7CB-4BC8-A009-B92BAA9F693B} = {CF65E456-3E26-41EF-B1C4-7868A5C27CE3}
+		{1C012599-E5EE-49F9-BCCB-3C6D50099240} = {D0288843-5717-4DC0-AF2B-084E6CA23C9B}
+		{4B1E7931-9DBA-4512-8E54-11EB4A2E747F} = {1C012599-E5EE-49F9-BCCB-3C6D50099240}
+		{BC5FDD54-2B35-43B3-A186-15FBB90D80B0} = {D83FAAEA-7822-4171-9B00-732E32ECBB79}
+		{C16B5767-E617-4105-808E-973368B562A4} = {BC5FDD54-2B35-43B3-A186-15FBB90D80B0}
 	EndGlobalSection
 EndGlobal

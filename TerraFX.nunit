@@ -2,7 +2,9 @@
 <NUnitProject>
   <Settings activeConfig="Debug" />
   <Config name="Debug" appbase=".artifacts\Debug\Binaries\">
+   <assembly path="TerraFX.Core.UnitTests\TerraFX.Core.UnitTests.dll" />
   </Config>
   <Config name="Release" appbase=".artifacts\Release\Binaries\">
+    <assembly path="TerraFX.Core.UnitTests\TerraFX.Core.UnitTests.dll" />
   </Config>
 </NUnitProject>
